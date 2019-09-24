@@ -3,7 +3,7 @@
   <groupId>com.developer</groupId>
   <artifactId>RestServiceMaven</artifactId>
   <version>1.0-SNAPSHOT</version>
-  <packaging>war</packaging>
+  <packaging>jar</packaging>
   <name>RestServiceMaven</name>
   <description>RestServiceMaven</description>
   <build>
