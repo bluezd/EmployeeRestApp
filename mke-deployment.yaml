@@ -6,18 +6,18 @@ metadata:
     run: employee-rest-service
 spec:
   replicas: 1
-  strategy:
-    rollingUpdate:
-      maxSurge: 1
-      maxUnavailable: 1
-    type: RollingUpdate
+  #strategy:
+  #  rollingUpdate:
+  #    maxSurge: 1
+  #    maxUnavailable: 1
+  #  type: RollingUpdate
   template:
     metadata:
       labels:
         run: employee-rest-service
     spec:
       containers:
-      - image: $OKE_REPOSITORY:$WERCKER_GIT_BRANCH-$WERCKER_GIT_COMMIT
+      - image: bluezd/java-maven-sonar:$BUILD_TIMESTAMP
         imagePullPolicy: Always 
         name: employee-rest-service 
         ports:
@@ -32,7 +32,7 @@ kind: Service
 metadata:
   name: employee-rest-service-svc
 spec:
-    type: ClusterIP
+    type: NodePort
     ports:
     - name: http
       port: 8081
@@ -40,18 +40,3 @@ spec:
       protocol: TCP
     selector:
       run: employee-rest-service
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: employee-rest-service-ing
-  annotations:
-    kubernetes.io/ingress.class: traefik
-spec:
-  rules:
-  - http:
-      paths:
-      - path: /EmployeeRestService
-        backend:
-          serviceName: employee-rest-service-svc
-          servicePort: 8081
