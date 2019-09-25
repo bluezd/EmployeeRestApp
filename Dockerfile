@@ -9,8 +9,13 @@ COPY . /app/
 # build the package
 RUN cd /app && mvn clean package
 
-WORKDIR /app
+# install tomcat
+RUN wget https://www-eu.apache.org/dist/tomcat/tomcat-7/v7.0.96/bin/apache-tomcat-7.0.96.tar.gz \
+    && tar -zxf apache-tomcat-7.0.96.tar.gz \
+    && cp /app/target/RestServiceMaven-1.0-SNAPSHOT.war apache-tomcat-7.0.96/webapps/EmployeeRestService.war
+
+WORKDIR apache-tomcat-7.0.96/
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "target/RestServiceMaven-1.0-SNAPSHOT.jar"]
+CMD ["bin/catalina.sh", "run"]
