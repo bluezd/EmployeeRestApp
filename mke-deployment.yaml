@@ -17,7 +17,7 @@ spec:
         run: employee-rest-service
     spec:
       containers:
-      - image: bluezd/java-maven-sonar:$BUILD_TIMESTAMP
+      - image: bluezd/java-maven-sonar:$BUILD_NUMBER
         imagePullPolicy: Always 
         name: employee-rest-service 
         ports:
